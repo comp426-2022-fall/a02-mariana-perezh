@@ -12,7 +12,7 @@
   },
   "bin": {
 	"galosh.js": "./cli.js"
-	},
+  },
   "author": "@mariana-perezh",
   "license": "GPL-3.0-or-later",
   "bugs": {
