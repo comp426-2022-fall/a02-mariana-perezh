@@ -10,10 +10,18 @@
     "type": "git",
     "url": "git+https://github.com/comp426-2022-fall/a02-mariana-perezh.git"
   },
+  "bin": {
+	"galosh.js": "./cli.js"
+	},
   "author": "@mariana-perezh",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comp426-2022-fall/a02-mariana-perezh/issues"
   },
-  "homepage": "https://github.com/comp426-2022-fall/a02-mariana-perezh#readme"
+  "homepage": "https://github.com/comp426-2022-fall/a02-mariana-perezh#readme",
+  "dependencies": {
+    "minimist": "^1.2.6",
+    "moment-timezone": "^0.5.37",
+    "node-fetch": "^3.2.10"
+  }
 }
