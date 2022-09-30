@@ -23,7 +23,7 @@ timezone = encodeURIComponent(tz)
 const latitude = args.n || args.s * -1;
 const longitude = args.e || args.w * -1;
 
-const day = 1;
+var day = 1;
 
 if (args.d != undefined) {
 	day = args.d;
@@ -41,15 +41,26 @@ const response = await fetch(url);
 
 const data = await response.json();
 
+//console.log(data);
+
 if (echo) {
 	console.log(data);
 	process.exit(0);
 }
 
-if (day == 0) {
-  console.log("today.")
-} else if (day > 1) {
-  console.log("in " + day + " days.")
+const precipitation_hrs = data.daily.precipitation_hours[day];
+
+var printing;
+if (precipitation_hrs == 0) {
+	printing = "You will not need your galoshes ";
 } else {
-  console.log("tomorrow.")
+	printing = "You might need your galoshes ";
+}
+
+if (day == 0) {
+  console.log(printing + "today.")
+} else if (day > 1) {
+  console.log(printing + "in " + day + " days.")
+} else {
+  console.log(printing + "tomorrow.")
 }
