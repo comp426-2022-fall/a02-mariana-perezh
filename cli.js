@@ -30,9 +30,6 @@ if (args.d != undefined) {
 }
 
 
-const echo = args.j;
-
-
 const url = "https://api.open-meteo.com/v1/forecast?" + "latitude=" + latitude + "&longitude=" + longitude + "&daily=precipitation_hours&current_weather=true&timezone=" + timezone;
 
 // console.log(url);
@@ -41,9 +38,7 @@ const response = await fetch(url);
 
 const data = await response.json();
 
-//console.log(data);
-
-if (echo) {
+if (args.j) {
 	console.log(data);
 	process.exit(0);
 }
