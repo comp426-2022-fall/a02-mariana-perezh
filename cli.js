@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const minimist = require('minimist');
-const momentTimezone = require('moment-timezone');
+import momentTimezone from 'moment-timezone';
+import fetch from 'node-fetch';
+import minimist from 'minimist';
+import fs from 'fs';
+
 
 const args = minimist(process.argv.slice(2));
 
@@ -13,28 +15,41 @@ if (args.h) {
 	process.exit(0);
 }
 
-const timezone = momentTimezone.tz.guess();
+const tz = momentTimezone.tz.guess();
 
-const latitude = args.n || args.s;
-const longitude = args.e || args.w;
+var timezone = args.t || timezone;
+timezone = encodeURIComponent(tz)
 
-const day = args.d || 1;
+const latitude = args.n || args.s * -1;
+const longitude = args.e || args.w * -1;
 
-if (day == 0) {
-	console.log("today.");
-} else if (day > 1) {
-	console.log("in " + day + " days.");
-} else {
-	console.log("tomorrow.");
+const day = 1;
+
+if (args.d != undefined) {
+	day = args.d;
 }
+
 
 const echo = args.j;
 
 
-const url = "https://api.open-meteo.com/v1/forecast?" + "latitude=" + latitude + "&longitude=" + longitude + "&timezone=" + timezone + "&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_hours,windspeed_10m_max,winddirection_10m_dominant" + "&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York&past_days=" + day;
+const url = "https://api.open-meteo.com/v1/forecast?" + "latitude=" + latitude + "&longitude=" + longitude + "&daily=precipitation_hours&current_weather=true&timezone=" + timezone;
 
 // console.log(url);
 
 const response = await fetch(url);
 
-const data = awaite response.json();
+const data = await response.json();
+
+if (echo) {
+	console.log(data);
+	process.exit(0);
+}
+
+if (day == 0) {
+  console.log("today.")
+} else if (day > 1) {
+  console.log("in " + day + " days.")
+} else {
+  console.log("tomorrow.")
+}
